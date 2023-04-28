@@ -1,0 +1,3 @@
+def trigger():
+    print("Triggered")
+    # switch lights on...

@@ -25,6 +25,7 @@ class Analyzer:
     def __init__(self):
         self.enabled = False
         self.inference_history = []
+        self.trigger_datetimes = []
 
         if os.environ.get("ONNX_MODEL_URL"):
             self.inference_engine = InferenceONNX()
@@ -66,6 +67,7 @@ class Analyzer:
                 if m_avg > TRIGGER_THRESHOLD:
                     LOGGER.warning("Triggered")
 
+                    self.trigger_datetimes.append(time.time())
                     self.last_trigger = time.time()
                     trigger()
                     self.end()

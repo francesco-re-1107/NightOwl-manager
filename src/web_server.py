@@ -2,6 +2,7 @@ from flask import Flask
 from waitress import serve
 import sys
 from utils import get_logger
+import json
 
 LOGGER = get_logger()
 
@@ -11,6 +12,7 @@ class WebServer:
         self.__app = Flask(__name__)
         self.__app.add_url_rule("/start_trigger", "start_trigger", self.start_trigger)
         self.__app.add_url_rule("/end_trigger", "end_trigger", self.end_trigger)
+        self.__app.add_url_rule("/trigger_datetimes", "trigger_datetimes", self.trigger_datetimes)
 
     def start_trigger(self):
         LOGGER.info("Starting trigger")
@@ -21,6 +23,9 @@ class WebServer:
         LOGGER.info("Ending trigger")
         self.__analyzer.end()
         return "OK"
+
+    def trigger_datetimes(self):
+        return json.dumps(self.__analyzer.trigger_datetimes)
 
     def start(self):
         try:

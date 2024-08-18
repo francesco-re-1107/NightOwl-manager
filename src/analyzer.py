@@ -11,8 +11,9 @@ from utils import to_int, to_float
 try:
     trigger = lambda: print("Trigger not defined")
     from trigger import trigger
-except:
-    pass
+except Exception as e:
+    trigger = lambda: print("Trigger error:", e )
+    print(e)
 
 LOGGER = get_logger()
 STREAM_URL = os.environ.get("STREAM_URL") or exit("STREAM_URL not specified")
